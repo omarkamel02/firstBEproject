@@ -1,24 +1,40 @@
 class MemberStore:
 
   members = []
-
+  last_id=1
   def get_all(self):
      return members
 
   def add(self, member):
-      members.append(member)
+      member.id = MemberStore.last_id
 
+  	  MemberStore.members.append(member)
+
+  	  MemberStore.last_id += 1
   def get_by_id(self, id):
       # search for member by id
+      for mem in MemberStore.members :
+          if mem.id == id:
+              return mem
+          else :
+              return 0
+
+
 
   def update(self, member):
      # update member data
 
   def delete(self, id):
       # delete member by id
+      name=get_by_id(id)
+      MemberStore.members.remove(name)
 
   def entity_exists(self, member):
       # checks if an entity exists in a store
+      if get_by_id(member.id) not 0:
+          return True
+      else :
+          return False
 
 class PostsStore:
 

@@ -23,6 +23,9 @@ class MemberStore:
 
   def update(self, member):
      # update member data
+     name=get_by_id(member.id)
+     name=member
+
 
   def delete(self, id):
       # delete member by id
@@ -35,6 +38,10 @@ class MemberStore:
           return True
       else :
           return False
+ def get_by_name (self,name):
+     for member in MemberStore.members:
+         if member.name==name:
+             return member 
 
 class PostsStore:
 

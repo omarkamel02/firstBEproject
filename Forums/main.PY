@@ -1,7 +1,6 @@
 import models
 import stores
-member_store=MemberStore()
-post_store=PostsStore()
+
 
 def create_members():
 
@@ -19,6 +18,10 @@ def store_should_add_models(members_instances, member_store):
 
     for member in members_instances:
         member_store.add(member)
+
+def store_should_add_posts(posts_instances, post_store):
+    for post in posts_instances:
+        post_store.add(post)
 
 
 def print_all_members(member_store):
@@ -56,6 +59,39 @@ def catch_exception_when_deleting():
         print("It should be an existence entity before deleting !")
 
 
+def create_posts(members_instances):
+
+    post1 = models.Post("Agriculture", "Agriculture is amazing", members_instances[0].id)
+    post2 = models.Post("Engineering", "I love engineering", members_instances[0].id)
+
+    post3 = models.Post("Medicine", "Medicine is great", members_instances[1].id)
+    post4 = models.Post("Architecture", "Spectacular art", members_instances[1].id)
+    post5 = models.Post("Astronomy", "Space is awesome", members_instances[1].id)
+
+    post6 = models.Post("Geology", "Earth is our friend", members_instances[2].id)
+    post7 = models.Post("ComputerSci", "Our passion", members_instances[2].id)
+    post8 = models.Post("Algorithms", "Yeah, more of that", members_instances[2].id)
+    post9 = models.Post("Operating Systems", "Ewww", members_instances[2].id)
+
+    print(post1)
+    print(post2)
+    print(post3)
+    print("=" * 30)
+
+    return post1, post2, post3, post4, post5, post6, post7, post8, post9
+
+
+def store_should_get_members_with_posts(member_store, post_store):
+    members_with_posts = member_store.get_members_with_posts(post_store)
+
+    for member_with_posts in members_with_posts:
+        print(member_with_posts.name)
+        for post in member_with_posts.posts:
+            print(post.content)
+
+        print("=" * 10)
+
+
 members_instances = create_members()
 member1, member2, member3 = members_instances
 
@@ -63,7 +99,6 @@ member_store = stores.MemberStore()
 
 store_should_add_models(members_instances, member_store)
 
-stores_should_be_similar()
 
 print_all_members(member_store)
 
@@ -74,3 +109,15 @@ update_should_modify_object(member_store, member3)
 catch_exception_when_deleting()
 
 print_all_members(member_store)
+posts_instances = create_posts(members_instances)
+
+post1, post2, post3, post4, post5, post6, post7, post8, post9 = posts_instances
+
+post_store = stores.PostsStore()
+
+store_should_add_posts(posts_instances, post_store)
+
+store_should_get_members_with_posts(member_store, post_store)
+
+
+#store_should_get_top_two(member_store, post_store)

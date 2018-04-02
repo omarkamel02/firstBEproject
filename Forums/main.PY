@@ -24,11 +24,13 @@ def store_should_add_posts(posts_instances, post_store):
         post_store.add(post)
 
 
+
 def print_all_members(member_store):
     print("=" * 30)
 
     for member in member_store.get_all():
         print(member)
+        print(member.id)
 
     print("=" * 30)
 
@@ -48,8 +50,9 @@ def update_should_modify_object(member_store, member3):
 
     print(member3_copy)
     member3_copy.name = "john"
+    print member3_copy
     member_store.update(member3_copy)
-    print(member_store.get_by_id(member3.id))
+    #print(member_store.get_by_id(member3.id))
 
 
 def catch_exception_when_deleting():
@@ -82,7 +85,7 @@ def create_posts(members_instances):
 
 
 def store_should_get_members_with_posts(member_store, post_store):
-    members_with_posts = member_store.get_members_with_posts(post_store)
+    members_with_posts = member_store.get_members_with_posts(post_store.posts)
 
     for member_with_posts in members_with_posts:
         print(member_with_posts.name)
@@ -90,6 +93,14 @@ def store_should_get_members_with_posts(member_store, post_store):
             print(post.content)
 
         print("=" * 10)
+
+def store_should_get_top_two(member_store, post_store):
+    top_two_members = member_store.get_top_two(post_store.get_all())
+
+    for member_with_posts in top_two_members:
+        print(member_with_posts.name)
+        for post in member_with_posts.posts:
+            print(post.title)
 
 
 members_instances = create_members()
@@ -102,7 +113,7 @@ store_should_add_models(members_instances, member_store)
 
 print_all_members(member_store)
 
-get_by_id_should_retrieve_same_object(member_store, member2)
+get_by_id_should_retrieve_same_object(member_store, member1)
 
 update_should_modify_object(member_store, member3)
 
@@ -117,7 +128,7 @@ post_store = stores.PostsStore()
 
 store_should_add_posts(posts_instances, post_store)
 
-store_should_get_members_with_posts(member_store, post_store)
+#store_should_get_members_with_posts(member_store, post_store)
 
 
-#store_should_get_top_two(member_store, post_store)
+store_should_get_top_two(member_store, post_store)
